@@ -142,8 +142,9 @@ function renderTodos(todos, filter, search = '') {
                    ${todo.completed ? 'checked' : ''} disabled>
             <span class="todo-title">${titleHtml}</span>
             <span class="todo-status ${todo.completed ? 'done' : 'pending'}">
-                ${todo.completed ? '✅ Fait' : '⏳ En cours'}
+                ${todo.completed ? 'Fait' : 'En cours'}
             </span>
+            <button class="todo-delete-btn" onclick="deleteTodo(${todo.id})">x</button>
         `;
 
         ul.appendChild(li);

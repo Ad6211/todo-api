@@ -18,8 +18,13 @@
             <span id="filterCount" class="filter-count">Filtre : <strong id="shownCount">0</strong></span>
         </div>
 
+        <div class="add-form">
+            <input type="text" id="newTodoInput" placeholder="Nouvelle tache..." autocomplete="off">
+            <button id="addBtn">Ajouter</button>
+        </div>
+
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="🔍 Rechercher par titre..." autocomplete="off">
+            <input type="text" id="searchInput" placeholder="Rechercher par titre..." autocomplete="off">
         </div>
 
         <div class="filters">
@@ -39,6 +44,7 @@
     <!-- L'ordre des scripts est important : chaque fichier dépend du précédent -->
     <script src="js/api.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/todoManager.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/main.js"></script>
 </body>

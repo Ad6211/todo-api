@@ -54,6 +54,48 @@ async function loadTodos() {
     console.log('main.js -> loadTodos() termine');
 }
 
+/**
+ * Initialise le formulaire d'ajout de tache
+ * - Clic sur le bouton "Ajouter" → ajoute la tache
+ * - Touche Entree dans l'input → ajoute la tache aussi
+ */
+function initAddForm() {
+    console.log('main.js -> initAddForm() : configuration du formulaire d\'ajout');
+    const input = document.getElementById('newTodoInput');
+    const btn = document.getElementById('addBtn');
+
+    if (!input || !btn) {
+        console.error('main.js -> ERREUR : elements du formulaire introuvables');
+        return;
+    }
+
+    // Fonction qui lit l'input et ajoute la tache
+    function handleAdd() {
+        const title = input.value.trim();
+        if (title === '') {
+            console.log('main.js -> Titre vide, annulation');
+            return; // On ne fait rien si le champ est vide
+        }
+        console.log('main.js -> Ajout de la tache :', title);
+        addTodo(title);  // Appelle la fonction dans todoManager.js
+        input.value = ''; // Vide le champ
+        input.focus();    // Remet le curseur dans le champ
+    }
+
+    // Clic sur le bouton
+    btn.addEventListener('click', handleAdd);
+
+    // Touche Entree dans l'input
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            console.log('main.js -> Touche Enter detectee');
+            handleAdd();
+        }
+    });
+
+    console.log('main.js -> Formulaire d\'ajout pret !');
+}
+
 console.log('main.js -> Initialisation en cours...');
 
 // Au chargement de la page :
@@ -65,8 +107,12 @@ initFilters();
 console.log('main.js -> Etape 2 : initSearch()');
 initSearch();
 
-// 3. On lance le chargement des tâches
-console.log('main.js -> Etape 3 : loadTodos()');
+// 3. On initialise le formulaire d'ajout
+console.log('main.js -> Etape 3 : initAddForm()');
+initAddForm();
+
+// 4. On lance le chargement des tâches
+console.log('main.js -> Etape 4 : loadTodos()');
 loadTodos();
 
 console.log('main.js -> Initialisation terminee, en attente des donnees...');
