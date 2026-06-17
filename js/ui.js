@@ -139,13 +139,19 @@ function renderTodos(todos, filter, search = '') {
         li.innerHTML = `
             <span class="todo-id">#${todo.id}</span>
             <input type="checkbox" class="todo-checkbox"
-                   ${todo.completed ? 'checked' : ''} disabled>
+                   ${todo.completed ? 'checked' : ''}>
             <span class="todo-title">${titleHtml}</span>
             <span class="todo-status ${todo.completed ? 'done' : 'pending'}">
                 ${todo.completed ? 'Fait' : 'En cours'}
             </span>
             <button class="todo-delete-btn" onclick="deleteTodo(${todo.id})">x</button>
         `;
+
+        // Quand on clique sur la checkbox, on bascule l'etat completed
+        const checkbox = li.querySelector('.todo-checkbox');
+        checkbox.addEventListener('change', function () {
+            toggleTodo(todo.id);
+        });
 
         ul.appendChild(li);
     });

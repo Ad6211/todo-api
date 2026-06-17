@@ -1,5 +1,5 @@
 /**
- * todoManager.js – Ajout et suppression de tâches en mémoire
+ * todoManager.js – Ajout, suppression et bascule de tâches en mémoire
  *
  * ATTENTION : les données ne sont PAS sauvegardées. Si tu actualises
  * la page, les tâches ajoutees/supprimees disparaissent et on recharge
@@ -70,6 +70,34 @@ function deleteTodo(id) {
     const avant = allTodos.length;
     allTodos = allTodos.filter(t => t.id !== id);
     console.log('todoManager.js -> Tache supprimee. Avant :', avant, 'Apres :', allTodos.length);
+
+    // On met a jour les statistiques (total, faites, en cours)
+    updateStats(allTodos);
+
+    // On reaffiche la liste avec le filtre et la recherche actuels
+    renderTodos(allTodos, currentFilter, searchTerm);
+
+    console.log('todoManager.js -> Affichage mis a jour !');
+}
+
+/**
+ * Bascule l'etat completed d'une tache (fait / en cours)
+ *
+ * @param {number} id – L'ID de la tache a basculer
+ */
+function toggleTodo(id) {
+    console.log('todoManager.js -> toggleTodo() appele pour ID :', id);
+
+    // On cherche la tache dans allTodos
+    const todo = allTodos.find(t => t.id === id);
+    if (!todo) {
+        console.error('todoManager.js -> Tache introuvable pour ID :', id);
+        return;
+    }
+
+    // On inverse l'etat completed
+    todo.completed = !todo.completed;
+    console.log('todoManager.js -> Tache mise a jour :', todo);
 
     // On met a jour les statistiques (total, faites, en cours)
     updateStats(allTodos);
