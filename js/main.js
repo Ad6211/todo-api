@@ -22,7 +22,7 @@ let allTodos = [];
 console.log('main.js -> Variable allTodos initialisee (tableau vide)');
 
 /**
- * Fonction principale : charge les tâdepuis l'API et les affiche
+ * Fonction principale : charge les tâches depuis l'API et les affiche
  * 1. Affiche le spinner de chargement
  * 2. Appelle l'API
  * 3. Si succès → stocke les données, met à jour les stats, affiche la liste
@@ -41,13 +41,26 @@ async function loadTodos() {
         allTodos = await fetchTodos();
         console.log('main.js -> Donnees stockees dans allTodos :', allTodos.length, 'taches');
 
-        // Étape 3 : mise à jour des statistiques et affichage
-        console.log('main.js -> Etape 3 : updateStats() + renderTodos()');
+        // Étape 3 : generer des taches supplementaires pour atteindre 1000 elements
+        console.log('main.js -> Generation de taches supplementaires...');
+        while (allTodos.length < 1000) {
+            allTodos.unshift({
+                userId: 1,
+                id: nextId,
+                title: `Tache supplementaire #${nextId}`,
+                completed: false
+            });
+            nextId++;
+        }
+        console.log('main.js -> Total apres generation :', allTodos.length, 'taches');
+
+        // Étape 4 : mise à jour des statistiques et affichage
+        console.log('main.js -> Etape 4 : updateStats() + renderTodos()');
         updateStats(allTodos);
         renderTodos(allTodos, currentFilter, searchTerm);
     } catch (error) {
-        // Étape 4 : gestion d'erreur
-        console.error('main.js -> Etape 4 : ERREUR attrapee :', error.message);
+        // Étape 5 : gestion d'erreur
+        console.error('main.js -> Etape 5 : ERREUR attrapee :', error.message);
         showError(error.message);
     }
 
